@@ -1,0 +1,26 @@
+{
+  "name": "bootstrap-simple-multiselect",
+  "homepage": "https://github.com/edsiddos/bootstrap-simple-multiselect",
+  "authors": [
+    "Ednei Leite da Silva <edsiddos@gmail.com>"
+  ],
+  "description": "This is a two-column transfer multi-select widget using bootstrap 3.",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "Bootstrap",
+    "multi-select"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

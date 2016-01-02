@@ -11,6 +11,7 @@
     display: inline-block;
     width: 45%;
     margin-bottom: 5px;
+    height: 35px;
 }
 
 .mst-filters-left {
@@ -66,4 +67,8 @@
 .mst-buttons button{
     width: 100%;
     height: 50px;
+}
+
+.mst-select-add-all, .mst-select-rem-all{
+    letter-spacing: -5px;
 }

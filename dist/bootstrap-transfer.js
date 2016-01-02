@@ -2,18 +2,23 @@
     $.fn.bootstrapTransfer = function (options) {
         var settings = $.extend({}, $.fn.bootstrapTransfer.defaults, options);
         var _this;
+
         /* #=============================================================================== */
         /* # Expose public functions */
         /* #=============================================================================== */
+
         this.populate = function (input) {
             _this.populate(input);
         };
+
         this.set_values = function (values) {
             _this.set_values(values);
         };
+
         this.get_values = function () {
             return _this.get_values();
         };
+
         return this.each(function () {
             _this = $(this);
             /* #=============================================================================== */
@@ -72,12 +77,15 @@
                 }
                 _this.update_lists(true);
             };
+
             _this.set_values = function (values) {
                 _this.move_elems(values, false, true);
             };
+
             _this.get_values = function () {
                 return _this.get_internal(_this.$target_select);
             };
+
             /* #=============================================================================== */
             /* # Implement private functions */
             /* #=============================================================================== */
@@ -88,22 +96,26 @@
                 })
                 return res;
             };
+
             _this.to_dict = function (list) {
                 var res = {};
                 for (var i in list)
                     res[list[i]] = true;
                 return res;
-            }
+            };
+
             _this.update_lists = function (force_hilite_off) {
                 var old;
                 if (!force_hilite_off) {
                     old = [_this.to_dict(_this.get_internal(_this.$remaining_select)),
                         _this.to_dict(_this.get_internal(_this.$target_select))];
                 }
+
                 _this.$remaining_select.empty();
                 _this.$target_select.empty();
                 var lists = [_this._remaining_list, _this._target_list];
                 var source = [_this.$remaining_select, _this.$target_select];
+
                 for (var i in lists) {
                     for (var j in lists[i]) {
                         var e = lists[i][j];
@@ -116,14 +128,16 @@
                         }
                     }
                 }
+
                 _this.$remaining_select.find('option').each(function () {
                     var inner = _this.$filter_input.val().toLowerCase();
                     var outer = $(this).html().toLowerCase();
                     if (outer.indexOf(inner) == -1) {
                         $(this).remove();
                     }
-                })
+                });
             };
+
             _this.move_elems = function (values, b1, b2) {
                 for (var i in values) {
                     val = values[i];
@@ -137,6 +151,7 @@
                 }
                 _this.update_lists(false);
             };
+
             _this.move_all = function (b1, b2) {
                 for (var i in _this._remaining_list) {
                     _this._remaining_list[i][1] = b1;
@@ -144,6 +159,7 @@
                 }
                 _this.update_lists(false);
             };
+
             _this.data('bootstrapTransfer', _this);
             return _this;
         });
@@ -152,25 +168,34 @@
         'template': '<div class="multi-select-transfer">\
                         <div class="mst-filters">\
                             <div class="mst-filters-left">\
-                                <input type="text" class="mst-filter-origin filter-input" />\
+                                <input type="text" class="mst-filter-origin filter-input form-control" />\
                             </div>\
                             <div class="mst-filters-right">\
-                                <input type="text" class="mst-filter-destiny" />\
                             </div>\
                         </div>\
                         <div class="mst-selects">\
                             <div class="mst-left">\
-                                <select multiple="multiple" class="filtered remaining mst-origin"></select>\
+                                <select multiple="multiple" name="remaining" class="filtered remaining mst-origin"></select>\
                             </div>\
                             <div class="mst-right">\
                                 <div class="mst-buttons">\
-                                    <button type="button" class="btn mst-select-add selector-add"> > </button>\
-                                    <button type="button" class="btn mst-select-rem selector-remove"> < </button>\
-                                    <button type="button" class="btn mst-select-add-all selector-chooseall"> >> </button>\
-                                    <button type="button" class="btn mst-select-rem-all selector-clearall"> << </button>\
+                                    <button type="button" class="btn btn-default mst-select-add selector-add">\
+                                        <span class="glyphicon glyphicon-chevron-right"></span>\
+                                    </button>\
+                                    <button type="button" class="btn btn-default mst-select-rem selector-remove">\
+                                        <span class="glyphicon glyphicon-chevron-left"></span>\
+                                    </button>\
+                                    <button type="button" class="btn btn-default mst-select-add-all selector-chooseall">\
+                                        <span class="glyphicon glyphicon-chevron-right"></span>\
+                                        <span class="glyphicon glyphicon-chevron-right"></span>\
+                                    </button>\
+                                    <button type="button" class="btn btn-default mst-select-rem-all selector-clearall">\
+                                        <span class="glyphicon glyphicon-chevron-left"></span>\
+                                        <span class="glyphicon glyphicon-chevron-left"></span>\
+                                    </button>\
                                 </div>\
                                 <div class="mst-select-destiny">\
-                                    <select multiple="multiple" class="filtered target mst-destiny"></select>\
+                                    <select multiple="multiple" name="target" class="filtered target mst-destiny"></select>\
                                 </div>\
                             </div>\
                         </div>\
@@ -178,5 +203,5 @@
         'height': '10em',
         'hilite_selection': true,
         'target_id': ''
-    }
+    };
 })(jQuery);
