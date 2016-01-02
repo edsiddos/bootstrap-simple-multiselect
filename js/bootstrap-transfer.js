@@ -1,14 +1,20 @@
-(function($){
-    $.fn.bootstrapTransfer = function(options) {
+(function ($) {
+    $.fn.bootstrapTransfer = function (options) {
         var settings = $.extend({}, $.fn.bootstrapTransfer.defaults, options);
         var _this;
         /* #=============================================================================== */
         /* # Expose public functions */
         /* #=============================================================================== */
-        this.populate = function(input) { _this.populate(input); };
-        this.set_values = function(values) { _this.set_values(values); };
-        this.get_values = function() { return _this.get_values(); };
-        return this.each(function(){
+        this.populate = function (input) {
+            _this.populate(input);
+        };
+        this.set_values = function (values) {
+            _this.set_values(values);
+        };
+        this.get_values = function () {
+            return _this.get_values();
+        };
+        return this.each(function () {
             _this = $(this);
             /* #=============================================================================== */
             /* # Add widget markup */
@@ -31,66 +37,68 @@
             /* # Apply settings */
             /* #=============================================================================== */
             /* target_id */
-            if (settings.target_id != '') _this.$target_select.attr('id', settings.target_id);
+            if (settings.target_id != '')
+                _this.$target_select.attr('id', settings.target_id);
             /* height */
             _this.find('select.filtered').css('height', settings.height);
             /* #=============================================================================== */
             /* # Wire internal events */
             /* #=============================================================================== */
-            _this.$add_btn.click(function(){
+            _this.$add_btn.click(function () {
                 _this.move_elems(_this.$remaining_select.val(), false, true);
             });
-            _this.$remove_btn.click(function(){
+            _this.$remove_btn.click(function () {
                 _this.move_elems(_this.$target_select.val(), true, false);
             });
-            _this.$choose_all_btn.click(function(){
+            _this.$choose_all_btn.click(function () {
                 _this.move_all(false, true);
             });
-            _this.$clear_all_btn.click(function(){
+            _this.$clear_all_btn.click(function () {
                 _this.move_all(true, false);
             });
-            _this.$filter_input.keyup(function(){
+            _this.$filter_input.keyup(function () {
                 _this.update_lists(true);
             });
             /* #=============================================================================== */
             /* # Implement public functions */
             /* #=============================================================================== */
-            _this.populate = function(input) {
+            _this.populate = function (input) {
                 // input: [{value:_, content:_}]
                 _this.$filter_input.val('');
                 for (var i in input) {
                     var e = input[i];
-                    _this._remaining_list.push([{value:e.value, content:e.content}, true]);
-                    _this._target_list.push([{value:e.value, content:e.content}, false]);
+                    _this._remaining_list.push([{value: e.value, content: e.content}, true]);
+                    _this._target_list.push([{value: e.value, content: e.content}, false]);
                 }
                 _this.update_lists(true);
             };
-            _this.set_values = function(values) {
+            _this.set_values = function (values) {
                 _this.move_elems(values, false, true);
             };
-            _this.get_values = function(){
+            _this.get_values = function () {
                 return _this.get_internal(_this.$target_select);
             };
             /* #=============================================================================== */
             /* # Implement private functions */
             /* #=============================================================================== */
-            _this.get_internal = function(selector) {
+            _this.get_internal = function (selector) {
                 var res = [];
-                selector.find('option').each(function() {
+                selector.find('option').each(function () {
                     res.push($(this).val());
                 })
                 return res;
             };
-            _this.to_dict = function(list) {
+            _this.to_dict = function (list) {
                 var res = {};
-                for (var i in list) res[list[i]] = true;
+                for (var i in list)
+                    res[list[i]] = true;
                 return res;
             }
-            _this.update_lists = function(force_hilite_off) {
+            _this.update_lists = function (force_hilite_off) {
                 var old;
                 if (!force_hilite_off) {
                     old = [_this.to_dict(_this.get_internal(_this.$remaining_select)),
-                           _this.to_dict(_this.get_internal(_this.$target_select))];
+                        _this.to_dict(_this.get_internal(_this.$target_select))];
                 }
                 _this.$remaining_select.empty();
                 _this.$target_select.empty();
@@ -108,7 +116,7 @@
                         }
                     }
                 }
-                _this.$remaining_select.find('option').each(function() {
+                _this.$remaining_select.find('option').each(function () {
                     var inner = _this.$filter_input.val().toLowerCase();
                     var outer = $(this).html().toLowerCase();
                     if (outer.indexOf(inner) == -1) {
@@ -116,7 +124,7 @@
                     }
                 })
             };
-            _this.move_elems = function(values, b1, b2) {
+            _this.move_elems = function (values, b1, b2) {
                 for (var i in values) {
                     val = values[i];
                     for (var j in _this._remaining_list) {
@@ -129,7 +137,7 @@
                 }
                 _this.update_lists(false);
             };
-            _this.move_all = function(b1, b2) {
+            _this.move_all = function (b1, b2) {
                 for (var i in _this._remaining_list) {
                     _this._remaining_list[i][1] = b1;
                     _this._target_list[i][1] = b2;
@@ -141,50 +149,32 @@
         });
     };
     $.fn.bootstrapTransfer.defaults = {
-        'template':                                         
-            '<table width="100%" cellspacing="0" cellpadding="0">\
-                <tr>\
-                    <td width="50%">\
-                        <div class="selector-available">\
-                            <h2>Available</h2>\
-                            <div class="selector-filter">\
-                                <table width="100%" border="0">\
-                                    <tr>\
-                                        <td style="width:14px;">\
-                                            <i class="icon-search"></i>\
-                                        </td>\
-                                        <td>\
-                                            <div style="padding-left:10px;">\
-                                                <input type="text" class="filter-input">\
-                                            </div>\
-                                        </td>\
-                                    </tr>\
-                                </table>\
+        'template': '<div class="multi-select-transfer">\
+                        <div class="mst-filters">\
+                            <div class="mst-filters-left">\
+                                <input type="text" class="mst-filter-origin filter-input" />\
                             </div>\
-                            <select multiple="multiple" class="filtered remaining">\
-                            </select>\
-                            <a href="#" class="selector-chooseall">Choose all</a>\
-                        </div>\
-                    </td>\
-                    <td>\
-                        <div class="selector-chooser">\
-                            <a href="#" class="selector-add">add</a>\
-                            <a href="#" class="selector-remove">rem</a>\
-                        </div>\
-                    </td>\
-                    <td width="50%">\
-                        <div class="selector-chosen">\
-                            <h2>Chosen</h2>\
-                            <div class="selector-filter right">\
-                                <p>Select then click</p><span class="illustration"></span>\
+                            <div class="mst-filters-right">\
+                                <input type="text" class="mst-filter-destiny" />\
                             </div>\
-                            <select multiple="multiple" class="filtered target">\
-                            </select>\
-                            <a href="#" class="selector-clearall">Clear all</a>\
                         </div>\
-                    </td>\
-                </tr>\
-            </table>',
+                        <div class="mst-selects">\
+                            <div class="mst-left">\
+                                <select multiple="multiple" class="filtered remaining mst-origin"></select>\
+                            </div>\
+                            <div class="mst-right">\
+                                <div class="mst-buttons">\
+                                    <button type="button" class="btn mst-select-add selector-add"> > </button>\
+                                    <button type="button" class="btn mst-select-rem selector-remove"> < </button>\
+                                    <button type="button" class="btn mst-select-add-all selector-chooseall"> >> </button>\
+                                    <button type="button" class="btn mst-select-rem-all selector-clearall"> << </button>\
+                                </div>\
+                                <div class="mst-select-destiny">\
+                                    <select multiple="multiple" class="filtered target mst-destiny"></select>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>',
         'height': '10em',
         'hilite_selection': true,
         'target_id': ''
