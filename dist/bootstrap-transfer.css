@@ -57,6 +57,7 @@
 .mst-buttons{
     width: 18.5%;
     float: left;
+    padding: 0 5px;
 }
 
 .mst-select-destiny{
@@ -71,4 +72,8 @@
 
 .mst-select-add-all, .mst-select-rem-all{
     letter-spacing: -5px;
+}
+
+.multi-select-transfer option {
+    padding: 3px 5px;
 }

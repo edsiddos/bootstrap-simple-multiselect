@@ -11,28 +11,34 @@
     <body>
 
         <h1>Bootstrap Transfer Multiselect Demo</h1>
-        <div id="test" style="width:400px">
-        </div>
+        <div id="test" style="width:50%"></div>
 
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="dist/bootstrap-transfer.js"></script>
         <script>
             $(function () {
                 var t = $('#test').bootstrapTransfer({
-                    'target_id': 'multi-select-input',
-                    'height': '15em',
-                    'hilite_selection': true
+                    'target_name': 'selecionados',
+                    'remaining_name': 'opcoes',
+                    'hilite_selection': false
                 });
 
                 t.populate([
                     {value: "1", content: "Apple"},
-                    {value: "2", content: "Orange"},
-                    {value: "3", content: "Banana"},
-                    {value: "4", content: "Peach"},
-                    {value: "5", content: "Grapes"}
+                    {value: "2", content: "Banana"},
+                    {value: "3", content: "Grapes"},
+                    {value: "4", content: "Orange"},
+                    {value: "5", content: "Peach"}
                 ]);
-                t.set_values(["2", "4"]);
-                //console.log(t.get_values());
+
+                t.set_values(["2", "5"]);
+
+                t.populate([
+                    {value: "6", content: "Wattermelon"},
+                    {value: "7", content: "Melon"}
+                ]);
+
+                t.set_values([]);
             });
         </script>
     </body>
